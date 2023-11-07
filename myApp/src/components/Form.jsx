@@ -1,19 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const Form = () => {
-  const [input, setInput] = useState()
+  const [input, setInput] = useState();
 
-  const handleSubmit = (e) =>{
+  const fetchData = async () => {
+    const result = await axios.get("/.netlify/functions/helloworld");
+    alert(`message from server: ${result}`);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    alert(input)
-  }
+    alert(input);
+  };
 
-  const handleInputChange = (e) =>{
-    const value = e.target.value
-    setInput(value)
-    
-  }
-
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInput(value);
+  };
 
   return (
     <form onSubmit={handleSubmit}>
