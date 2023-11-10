@@ -1,10 +1,17 @@
 const nodemailer = require("nodemailer");
 require("dotenv").config();
-const { google } = require("googleapis");
-const OAuth2 = google.auth.OAuth2;
-
+// const { google } = require("googleapis");
+// const oAuth2Client = new google.auth.OAuth2(
+//   process.env.GMAIL_API_CLIENT_ID,
+//   process.env.GMAIL_API_CLIENT_SECRET,
+//   "https://developers.google.com/oauthplayground"
+// );
+// oAuth2Client.setCredentials({
+//   refreshToken: process.env.GMAIL_API_REFRESH_TOKEN,
+// });
 
 function createMailClient() {
+  console.log("sadaaa");
   return nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 587,
@@ -19,12 +26,15 @@ function createMailClient() {
   });
 }
 
-const mailClient = createMailClient();
-
-exports.handler = async (event, context) => {
+export const handler = async (event, context) => {
   const { email, text } = JSON.parse(event.body);
+  // console.log("ACCESS_TOKEN", oAuth2Client);
+    const mailClient = createMailClient()
 
   try {
+    // const ACCESS_TOKEN = await oAuth2Client.getAccessToken();
+    // console.log("ACCESS_TOKEN", ACCESS_TOKEN);
+
     // const json = JSON.parse(event.body);
     const gmailResponse = await mailClient.sendMail({
       from: `antoniojerka@gmail.com`, // sender address

@@ -37,7 +37,7 @@ const Form = () => {
         value={input.email}
         onChange={handleInputChange}
       />
-      <label htmlFor="text">Username</label>
+      <label htmlFor="text">Text</label>
       <input
         type="text"
         id="text"
