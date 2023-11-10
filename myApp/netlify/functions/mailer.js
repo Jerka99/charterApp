@@ -1,14 +1,14 @@
 // const nodemailer = require("nodemailer");
 // require("dotenv").config();
-const { google } = require("googleapis");
-const oAuth2Client = new google.auth.OAuth2(
-  process.env.GMAIL_API_CLIENT_ID,
-  process.env.GMAIL_API_CLIENT_SECRET,
-  "https://developers.google.com/oauthplayground"
-);
-oAuth2Client.setCredentials({
-  refresh_token: process.env.GMAIL_API_REFRESH_TOKEN,
-});
+// const { google } = require("googleapis");
+// const oAuth2Client = new google.auth.OAuth2(
+//   process.env.GMAIL_API_CLIENT_ID,
+//   process.env.GMAIL_API_CLIENT_SECRET,
+//   "https://developers.google.com/oauthplayground"
+// );
+// oAuth2Client.setCredentials({
+//   refresh_token: process.env.GMAIL_API_REFRESH_TOKEN,
+// });
 
 export const handler = async (event, context) => {
   // const { email, text } = JSON.parse(event.body);
