@@ -10,13 +10,13 @@ oAuth2Client.setCredentials({
   refresh_token: process.env.GMAIL_API_REFRESH_TOKEN,
 });
 
-export const handler = async (event, context) => {
+exports.handler = async (event, context) =>{
   const { email, text } = JSON.parse(event.body);
   console.log("ACCESS_TOKEN");
 
   try {
     const ACCESS_TOKEN = await oAuth2Client.getAccessToken();
-    console.log("ACCESS_TOKEN", ACCESS_TOKEN);  
+    console.log("ACCESS_TOKEN", ACCESS_TOKEN.data);  
     const mailClient = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
