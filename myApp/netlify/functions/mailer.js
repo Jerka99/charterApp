@@ -1,39 +1,35 @@
 const nodemailer = require("nodemailer");
 require("dotenv").config();
-// const { google } = require("googleapis");
-// const oAuth2Client = new google.auth.OAuth2(
-//   process.env.GMAIL_API_CLIENT_ID,
-//   process.env.GMAIL_API_CLIENT_SECRET,
-//   "https://developers.google.com/oauthplayground"
-// );
-// oAuth2Client.setCredentials({
-//   refreshToken: process.env.GMAIL_API_REFRESH_TOKEN,
-// });
-
-function createMailClient() {
-  console.log("sadaaa");
-  return nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false, // true for 465, false for other ports
-    auth: {
-      type: "OAuth2",
-      user: process.env.GMAIL_EMAIL_ADDRESS,
-      clientId: process.env.GMAIL_API_CLIENT_ID,
-      clientSecret: process.env.GMAIL_API_CLIENT_SECRET,
-      refreshToken: process.env.GMAIL_API_REFRESH_TOKEN,
-    },
-  });
-}
+const { google } = require("googleapis");
+const oAuth2Client = new google.auth.OAuth2(
+  process.env.GMAIL_API_CLIENT_ID,
+  process.env.GMAIL_API_CLIENT_SECRET,
+  "https://developers.google.com/oauthplayground"
+);
+oAuth2Client.setCredentials({
+  refresh_token: process.env.GMAIL_API_REFRESH_TOKEN,
+});
 
 export const handler = async (event, context) => {
   const { email, text } = JSON.parse(event.body);
-  // console.log("ACCESS_TOKEN", oAuth2Client);
-    const mailClient = createMailClient()
+  console.log("ACCESS_TOKEN");
 
   try {
-    // const ACCESS_TOKEN = await oAuth2Client.getAccessToken();
-    // console.log("ACCESS_TOKEN", ACCESS_TOKEN);
+    const ACCESS_TOKEN = await oAuth2Client.getAccessToken();
+    console.log("ACCESS_TOKEN", ACCESS_TOKEN);  
+    const mailClient = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false, // true for 465, false for other ports
+      auth: {
+        type: "OAuth2",
+        user: process.env.GMAIL_EMAIL_ADDRESS,
+        clientId: process.env.GMAIL_API_CLIENT_ID,
+        clientSecret: process.env.GMAIL_API_CLIENT_SECRET,
+        refreshToken: process.env.GMAIL_API_REFRESH_TOKEN,
+        accessToken: ACCESS_TOKEN
+      },
+    });
 
     // const json = JSON.parse(event.body);
     const gmailResponse = await mailClient.sendMail({
@@ -53,60 +49,3 @@ export const handler = async (event, context) => {
   }
 };
 
-// const createTransporter = async () => {
-//   const oauth2Client = new OAuth2(
-//     process.env.GMAIL_API_CLIENT_ID,
-//     process.env.GMAIL_API_CLIENT_SECRET,
-//     "https://developers.google.com/oauthplayground"
-//   );
-
-//   oauth2Client.setCredentials({
-//     refresh_token: process.env.GMAIL_API_REFRESH_TOKEN,
-//   });
-
-//   const accessToken = await new Promise((resolve, reject) => {
-//     oauth2Client.getAccessToken((err, token) => {
-//       if (err) {console.log('err',err)
-//         reject();
-//       }
-//       console.log('token',token)
-//       resolve(token);
-//     });
-//   });
-
-//   const transporter = nodemailer.createTransport({
-//     service: "gmail",
-//     auth: {
-//       type: "OAuth2",
-//       user: process.env.GMAIL_EMAIL_ADDRESS,
-//       accessToken,
-//       clientId: process.env.GMAIL_API_CLIENT_ID,
-//       clientSecret: process.env.GMAIL_API_CLIENT_SECRET,
-//       refreshToken: process.env.GMAIL_API_REFRESH_TOKEN,
-//     },
-//   });
-//   console.log('transporter',transporter)
-
-//   return transporter;
-// };
-
-// exports.handler = async (event, context) => {
-//   const { email, text } = event.body;
-//   console.log(event.body);
-//   let emailTransporter = await createTransporter();
-//   try {
-//     const gmailResponse = await emailTransporter.sendMail({
-//       from: `antoniojerka@gmail.com`, // sender address
-//       to: email, // list of receivers
-//       subject: "json.subject",
-//       text: text, // plain text body
-//       html: "<b>Hello world???</b>",
-//     });
-//     return {
-//       statusCode: 200,
-//       body: "Message sent!" + gmailResponse.messageId,
-//     };
-//   } catch (err) {console.log('err',err)
-//     return { statusCode: 500, body: err.toString() };
-//   }
-// };
