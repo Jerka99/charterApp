@@ -10,9 +10,11 @@ const Form = () => {
         email: input.email,
         text: input.text,
       });
-      console.log(`message from server: ${result.data.message}`);
+      console.log(`message from server: ${result.data}`);
+      alert(result.data)
     } catch (error) {
       console.log(error);
+      alert(error.response.data)
     }
     // fetch("/.netlify/functions/helloworld").then(res=>res.json()).then(data => alert(data.message))
   };

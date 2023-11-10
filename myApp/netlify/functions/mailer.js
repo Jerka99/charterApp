@@ -39,10 +39,11 @@ export const handler = async (event, context) => {
       text: text, // plain text body
       html: `<b style="color: purple; background-color: #e5e5e5; height: 33px;">${text}</b>`,
     });
-
+    console.log(gmailResponse)
     return {
       statusCode: 200,
-      body: "Message sent!" + gmailResponse.messageId,
+      body: "Message sent!",
+      // body: "Message sent!" + gmailResponse.messageId,
     };
   } catch (err) {
     return { statusCode: 500, body: err.toString() };
