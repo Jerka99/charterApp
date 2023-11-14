@@ -4,7 +4,7 @@ require("dotenv").config();
 
 exports.handler = async (event, context) =>{
     const { email, text } = JSON.parse(event.body);
-    console.log('brevo')
+
     try {
       const mailClient = nodemailer.createTransport({
         host: "smtp-relay.brevo.com",
@@ -18,7 +18,7 @@ exports.handler = async (event, context) =>{
   
       // const json = JSON.parse(event.body);
       const response = await mailClient.sendMail({
-        from: `antoniojerka@gmail.com`, // sender address
+        from: process.env.GMAIL_EMAIL_ADDRESS, // sender address
         to: email, // list of receivers
         subject: "json.subject",
         text: text, // plain text body

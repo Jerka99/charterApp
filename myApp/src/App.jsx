@@ -10,7 +10,9 @@ function App() {
   return (
     <>
       <Form provider="Google" url = "/.netlify/functions/mailer"/>
-      <Form provider="Brevo" url = "/.netlify/functions/brevoNodemailer"/>
+      <Form provider="Brevo with SMTP KEY" url = "/.netlify/functions/brevoNodemailer"/>
+      {/* <Form provider="Brevo with API" url = "/.netlify/functions/brevoMailer"/> */}
+
     </>
   )
 }
