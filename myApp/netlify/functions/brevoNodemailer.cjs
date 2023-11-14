@@ -17,16 +17,25 @@ exports.handler = async (event, context) =>{
       });
   
       // const json = JSON.parse(event.body);
-      const response = await mailClient.sendMail({
-        from: process.env.GMAIL_EMAIL_ADDRESS, // sender address
-        to: email, // list of receivers
+      const AdminResponse = await mailClient.sendMail({
+        from: email, // sender address
+        to: process.env.GMAIL_EMAIL_ADDRESS, // list of receivers
         subject: "json.subject",
         text: text, // plain text body
         html: `<b style="color: purple; background-color: #e5e5e5; height: 33px;">${text}</b>`,
       });
-      console.log(response)
+
+      const ClientResponse = await mailClient.sendMail({
+        from: process.env.GMAIL_EMAIL_ADDRESS, // sender address
+        to: email, // list of receivers
+        subject: "json.subject",
+        text: text, // plain text body
+        html: `<b style="color: purple; background-color: #e5e5e5; height: 33px;">Sucessfully sent!</b>`,
+      });
+
+      console.log(ClientResponse, AdminResponse)
       return {
-        statusCode: 200,
+        statusCode: parseInt(ClientResponse.response, AdminResponse.response),
         body: "Message sent!",
       };
     } catch (err) {
