@@ -31,14 +31,12 @@ exports.handler = async (event, context) => {
       text: text, // plain text body
       html: `<div style="
       width: 100%;
-    height: 30px;
-    background: black;
-    border: solid 2px red;
+    border: solid 2px green;
       "><b style="color: white;
-      background-color: red;
+      background-color: green;
       padding: 5px;
       border-radius: 38px;
-      margin: 0 auto;
+      margin: 10px auto;
       width: fit-content;
       display: block;">Sucessfully sent!</b></div>`,
     });
