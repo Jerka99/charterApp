@@ -47,6 +47,7 @@ exports.handler = async (event, context) => {
       body: "Message sent!",
     };
   } catch (err) {
+    console.log(err.responseCode);
     return { statusCode: 500, body: err.toString() };
   }
 };
