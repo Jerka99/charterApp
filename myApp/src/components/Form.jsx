@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import waves from '../assets/waves.svg'
+import boat from '../assets/boat.svg'
 
 const Form = ({ url, provider, setForm }) => {
   const [input, setInput] = useState({ email: "", text: "" });
@@ -55,15 +57,15 @@ const Form = ({ url, provider, setForm }) => {
   return (
     <div>
       <div id="order-background" onClick={() => setForm(false)}></div>
-      {status.status == "loading" ? (
+      {status.status !== "loading" ? (
         <div id="sending">
           <div>
-            <img src="./public/boat.svg" id="boat" />
+            <img src={boat} id="boat" />
             <div>
-              <img src="./public/waves.svg" />
-              <img src="./public/waves.svg" className="waves" />
-              <img src="./public/waves.svg" className="waves" />
-              <img src="./public/waves.svg" className="waves" />
+            <img src={waves} className="waves" />
+              <img src={waves} className="waves" />
+              <img src={waves} className="waves" />
+              <img src={waves} className="waves" />
             </div>
           </div>
           <p>SENDING MAIL...</p>
