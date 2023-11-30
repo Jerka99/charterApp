@@ -57,7 +57,7 @@ const Form = ({ url, provider, setForm }) => {
   return (
     <div>
       <div id="order-background" onClick={() => setForm(false)}></div>
-      {status.status !== "loading" ? (
+      {status.status == "loading" ? (
         <div id="sending">
           <div>
             <img src={boat} id="boat" />
